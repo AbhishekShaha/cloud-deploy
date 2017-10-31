@@ -1,81 +1,96 @@
-{% extends "bootstrap/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block head %}
-<title>{% block title %}{% endblock %}</title>
-<!-- Bootstrap core CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Web Application for Cloud Architecture Project">
 
-<!-- Custom styles for this template -->
-<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+	<!-- meta properties -->
+	<meta property="og:title" content="HNKATWE|{% block title %}{% endblock %}"/>
+	<meta property="og:site_name" content="HNKATWE"/>
 
-{% endblock %}
+	<title>HNKATWE|{{self.title()}}</title>
 
-{% block navbar %}
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container">
-    <a href="#" class="navbar-brand pull-left"><img src="{{ url_for('static', filename='imgs/favicon.png') }}" style="width:35px;height: auto; padding-right: 10px">HNKATWE</a>
-  </div>
-</nav>
-{% endblock %}
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='imgs/favicon-32x32.png') }}">
 
-{% block content %}
-<div class="container" style="padding-top: 50px;">
-  {% for message in get_flashed_messages() %}
-  <div class="alert alert-warning">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{ message }}
-  </div>
-  {% endfor %}
-  <div class="row">
-    <div class="col-md-4 col-lg-3" style="padding-bottom: 10px">
+	<!-- CSS -->
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-      <div class="bootstrap-vertical-nav">
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-        <button class="btn btn-primary d-md-none" data-toggle="collapse" href="#collapseExample">
-          <span class="">Menu</span>
-        </button>
+	<!-- Custom HNKATWE Css -->
+	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 
-        <div class="collapse" id="collapseExample">
-          <ul class="nav flex-column" id="exCollapsingNavbar3">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Make an Enquiry</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-lg-9" style="padding-top: 20px">
-      {% block page_content %}{% endblock %}
-    </div>
-  </div>
-</div>
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-  <div class="container">
-    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
-  </div>
-  <!-- /.container -->
-</footer>
-{% endblock %}
+	<!-- Javascript -->
+	<!-- import jquery cdn -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
-{% block scripts %}
-<!-- import jquery cdn -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<!-- import bootstrap js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 
-<!-- import bootstrap js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	{% block page_includes %}
+	{% endblock %}
+</head>
 
-{% endblock %}
+<body>
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+		
+	</style>>
+		<div class="container">
+			<a href="#" class="navbar-brand pull-left"><img src="{{ url_for('static', filename='imgs/favicon.png') }}" style="width:35px;height: auto; padding-right: 10px">HNKATWE</a>
+		</div>
+	</nav>
+	<div class="container" id="body">
+		<div class="row">
+			<div class="col-md-4 col-lg-3" style="padding-bottom: 10px">
+
+				<div class="bootstrap-vertical-nav">
+
+					<button id="buttoncollapse" class="btn btn-primary d-md-none" data-toggle="collapse" href="#collapseExample">
+						<span class="">Menu</span>
+					</button>
+
+					<div class="collapse" id="collapseExample">
+						<ul class="nav flex-column" id="exCollapsingNavbar3">
+							<li class="nav-item">
+								<a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Make an Enquiry</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ./col-lg-3 -->
+			</div>
+
+			<div class="col-lg-9" id="main">
+				{% block page_content %}{% endblock %}
+				<!-- ./col-lg-9 -->
+			</div>
+			<!-- ./row -->
+		</div>
+		<!-- ./container -->
+	</div>
+
+	<footer class="footer bg-dark">
+		<div class="container text-center">
+			<span class="text-white">Copyright &copy; HNKATWE 2017</span>
+		</div>
+	</footer>
+</body>
+</html>
