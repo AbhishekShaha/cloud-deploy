@@ -43,54 +43,54 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
 		
 	</style>>
-		<div class="container">
-			<a href="#" class="navbar-brand pull-left"><img src="{{ url_for('static', filename='imgs/favicon.png') }}" style="width:35px;height: auto; padding-right: 10px">HNKATWE</a>
-		</div>
-	</nav>
-	<div class="container" id="body">
-		<div class="row">
-			<div class="col-md-4 col-lg-3" style="padding-bottom: 10px">
-
-				<div class="bootstrap-vertical-nav">
-
-					<button id="buttoncollapse" class="btn btn-primary d-md-none" data-toggle="collapse" href="#collapseExample">
-						<span class="">Menu</span>
-					</button>
-
-					<div class="collapse" id="collapseExample">
-						<ul class="nav flex-column" id="exCollapsingNavbar3">
-							<li class="nav-item">
-								<a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Make an Enquiry</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">About</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-
-				<!-- ./col-lg-3 -->
-			</div>
-
-			<div class="col-lg-9" id="main">
-				{% block page_content %}{% endblock %}
-				<!-- ./col-lg-9 -->
-			</div>
-			<!-- ./row -->
-		</div>
-		<!-- ./container -->
+	<div class="container">
+		<a href="{{ url_for('main.index') }}" class="navbar-brand pull-left"><img src="{{ url_for('static', filename='imgs/favicon.png') }}" style="width:35px;height:auto; padding-right: 10px">HNKATWE</a>
 	</div>
+</nav>
+<div class="container" id="body">
+	<div class="row">
+		<div class="col-md-4 col-lg-3" style="padding-bottom: 10px">
 
-	<footer class="footer bg-dark">
-		<div class="container text-center">
-			<span class="text-white">Copyright &copy; HNKATWE 2017</span>
+			<div class="bootstrap-vertical-nav">
+
+				<button id="buttoncollapse" class="btn btn-primary d-md-none" data-toggle="collapse" href="#collapseExample">
+					<span class="">Menu</span>
+				</button>
+
+				<div class="collapse" id="collapseExample">
+					<ul class="nav flex-column" id="exCollapsingNavbar3">
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Make an Enquiry</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">About</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- ./col-lg-3 -->
 		</div>
-	</footer>
+
+		<div class="col-lg-9" id="main">
+			{% block page_content %}{% endblock %}
+			<!-- ./col-lg-9 -->
+		</div>
+		<!-- ./row -->
+	</div>
+	<!-- ./container -->
+</div>
+
+<footer class="footer bg-dark">
+	<div class="container text-center">
+		<span class="text-white">Copyright &copy; HNKATWE 2017</span>
+	</div>
+</footer>
 </body>
 </html>
