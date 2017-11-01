@@ -1,0 +1,17 @@
+{% for book in books %}
+<div class="col-lg-4 col-md-6 mb-4">
+	<div class="card h-100">
+		<a href="{{ url_for('.book', id=book.id) }}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+		<div class="card-body">
+			<h4 class="card-title">
+				<a href="{{ url_for('.book', id=book.id) }}">{{ book.name }}</a>
+			</h4>
+			<h5>{{ book.author }}</h5>
+			<p class="card-text">{{ book.description }}</p>
+		</div>
+		<div class="card-footer">
+			<small class="text-muted">{% for n in range(book.average) %} &#9733; {% endfor %}</small>
+		</div>
+	</div>
+</div>
+{% endfor %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %} {{ book.title }} {% endblock %}
+
+{% block page_content %}
+
+<h1>{{ book.name }}</h1>
+<h2>{{ book.author }}</h2>
+<p>{{ book.description }}</p>
+<hr>
+<h3>Write Review</h3>
+<hr>
+<div>
+	{{ wtf.quick_form(form )}}
+</div>
+{% for review in reviews %}
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-1">
+			<img class="rounded-circle profile-thumbnail" src="{{ review.reviewer.gravatar(size=40) }}">
+		</div>
+		<div class="col-lg-8">
+			<h1>{{ review.reviewer.username }}</h1>
+			<p>{{ review.body }}</p>
+			<span class="badge badge-secondary badge-pill">{{ review.rating }}</span>
+		</div>
+	</div>
+</div>
+{% endfor %}
+{% endblock %}

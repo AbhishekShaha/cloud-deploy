@@ -34,6 +34,8 @@
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
+	{{ moment.include_moment() }}
+
 	{% block page_includes %}
 	{% endblock %}
 </head>
@@ -41,56 +43,76 @@
 <body>
 	<!-- Navigation Bar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
-		
-	</style>>
-	<div class="container">
-		<a href="{{ url_for('main.index') }}" class="navbar-brand pull-left"><img src="{{ url_for('static', filename='imgs/favicon.png') }}" style="width:35px;height:auto; padding-right: 10px">HNKATWE</a>
-	</div>
-</nav>
-<div class="container" id="body">
-	<div class="row">
-		<div class="col-md-4 col-lg-3" style="padding-bottom: 10px">
+		<div class="container">
+			<a href="{{ url_for('main.index') }}" class="navbar-brand pull-left"><img src="{{ url_for('static', filename='imgs/favicon.png') }}" style="width:35px;height:auto; padding-right: 10px">HNKATWE</a>
+		</div>
+	</nav>
+	<div class="container" id="body">
+		{% for message in get_flashed_messages() %}
+		<div class="alert alert-warning" style="margin-top:10px;">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			{{ message }}
+		</div>
+		{% endfor %}
+		<div class="row">
+			<div class="col-md-4 col-lg-3" style="padding-bottom: 10px">
 
-			<div class="bootstrap-vertical-nav">
+				<div class="bootstrap-vertical-nav">
 
-				<button id="buttoncollapse" class="btn btn-primary d-md-none" data-toggle="collapse" href="#collapseExample">
-					<span class="">Menu</span>
-				</button>
+					<button id="buttoncollapse" class="btn btn-primary d-md-none" data-toggle="collapse" href="#collapseExample">
+						<span class="">Menu</span>
+					</button>
 
-				<div class="collapse" id="collapseExample">
-					<ul class="nav flex-column" id="exCollapsingNavbar3">
-						<li class="nav-item">
-							<a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Make an Enquiry</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">About</a>
-						</li>
-					</ul>
+					<div class="collapse" id="collapseExample">
+						<ul class="nav flex-column" id="exCollapsingNavbar3">
+							<li class="nav-item">
+								<a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
+							</li>
+							{% if current_user.is_authenticated %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ url_for('auth.logout') }}">Sign Out</a>
+							</li>
+							{% else %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a>
+							</li>
+							{% endif %}
+
+							{% if current_user.can(Permission.UPLOAD_BOOKS) %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ url_for('main.add_book') }}">Add New Book</a>
+							</li>
+							{% endif %}
+							<li class="nav-item">
+								<a class="nav-link" href="#">Make an Enquiry</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">About</a>
+							</li>
+						</ul>
+					</div>
 				</div>
+
+				<!-- ./col-lg-3 -->
 			</div>
 
-			<!-- ./col-lg-3 -->
+			<div class="col-lg-9" id="main">
+				{% block page_content %}{% endblock %}
+				<!-- ./col-lg-9 -->
+			</div>
+			<!-- ./row -->
 		</div>
+		<!-- ./container -->
+		<br/>
+	</div>
 
-		<div class="col-lg-9" id="main">
-			{% block page_content %}{% endblock %}
-			<!-- ./col-lg-9 -->
+	<footer class="footer bg-dark">
+		<div class="container text-center">
+			<span class="text-white">Copyright &copy; HNKATWE 2017</span>
 		</div>
-		<!-- ./row -->
-	</div>
-	<!-- ./container -->
-</div>
-
-<footer class="footer bg-dark">
-	<div class="container text-center">
-		<span class="text-white">Copyright &copy; HNKATWE 2017</span>
-	</div>
-</footer>
+	</footer>
 </body>
 </html>

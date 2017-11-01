@@ -4,27 +4,10 @@ from flask_login import login_user, logout_user, login_required, current_user
 from app import db
 from app.models import User
 from flask_mail import Mail, Message
-from .tasks import send_email
+from app.utils.tasks import send_email
 from . import auth
 
 
-
-@auth.before_app_request
-def before_request():
-	"""
-	Executes before a request is processed.
-
-	If will fire if four conditions are met:
-		1. The user is authenticated (logged in)
-		2. The user is not confirmed
-		3. The request.endpoint is outside of the blueprint.
-		4. The request.endpoint is not for a static resource.
-	"""
-	if current_user.is_authenticated \
-			and not current_user.confirmed \
-			and request.endpoint and request.endpoint[:5] != 'auth.' \
-			and request.endpoint != 'static':
-		return redirect(url_for('auth.unconfirmed'))
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -65,6 +48,7 @@ def login():
 def logout():
 	# logout user.
     logout_user()
+    flash('Logged Out Successfully')
     return redirect(url_for('main.index'))
 
 @auth.route('/confirm/<token>')
