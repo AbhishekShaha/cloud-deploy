@@ -1,9 +1,9 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from flask_login import current_user, login_required
 from . import main as main_blueprint
-from app.blueprints.main.forms import BookForm, ReviewForm
+from app.blueprints.main.forms import BookForm, ReviewForm, EnquiryForm
 from app.utils.decorators import admin_required
-from app.models import Book, Permission, Review, User
+from app.models import Book, Permission, Review, User, Enquiry
 from app import db
 from sqlalchemy import func
 
@@ -46,6 +46,7 @@ def book(id):
 
 
 @main_blueprint.route('/add-book', methods=['GET','POST'])
+@login_required
 def add_book():
 	form = BookForm()
 	if current_user.is_authenticated and current_user.confirmed \
@@ -54,3 +55,18 @@ def add_book():
 		db.session.add(book)
 		return redirect(url_for('main.index'))
 	return render_template('main/add_book.html', form=form)
+
+
+@main_blueprint.route('/enquiry', methods=['GET', 'POST'])
+@login_required
+def enquiry():
+	form = EnquiryForm()
+	if current_user.is_authenticated and current_user.confirmed \
+		and form.validate_on_submit():
+		enquiry = Enquiry(email=form.email.data, body=form.body.data, enquirer=current_user._get_current_object())
+		db.session.add(enquiry)
+		return redirect(url_for('main.index'))
+	return render_template('main/enquiry.html', form=form)
+
+
+

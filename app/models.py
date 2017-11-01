@@ -55,6 +55,7 @@ class User(UserMixin, db.Model):
 	member_since = db.Column(db.DateTime(), default=datetime.utcnow)
 	last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
 	reviews = db.relationship('Review', backref='reviewer', lazy='dynamic')
+	enquiries = db.relationship('Enquiry', backref='enquirer', lazy='dynamic')
 
 
 	def __init__(self, **kwargs):
@@ -199,3 +200,13 @@ class Review(db.Model):
 	rating = db.Column(db.Integer)
 	reviewer_id = db.Column(db.Integer, db.ForeignKey(User.id))
 	book_id = db.Column(db.Integer, db.ForeignKey(Book.id))
+
+
+class Enquiry(db.Model):
+	__tablename__ = 'enquiries'
+	id = db.Column(db.Integer, primary_key=True)
+	email = db.Column(db.String(64))
+	subject = db.Column(db.String(64))
+	body = db.Column(db.Text)
+	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+	user_id = db.Column(db.Integer, db.ForeignKey(User.id))

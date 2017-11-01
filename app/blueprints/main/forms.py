@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
-from wtforms.validators import Required, Length
+from wtforms.validators import Required, Length, Email
 from wtforms import ValidationError
 from app.models import User
 
@@ -22,3 +22,8 @@ class ReviewForm(FlaskForm):
 		if field.data < 1 or field.data > 5:
 			raise ValidationError('Rating Must Be Between 1-5')
 
+class EnquiryForm(FlaskForm):
+	email = StringField('Contact Email', validators=[Required(), Length(1,64), Email()])
+	subject = StringField('Subject', validators=[Required(), Length(1,64)])
+	body = StringField('Enquiry', validators=[Required()])
+	submit = SubmitField('Submit Enquiry')
