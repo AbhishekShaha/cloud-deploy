@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField, IntegerField, TextAreaField
 from wtforms.validators import Required, Length, Email
 from wtforms import ValidationError
 from app.models import User
@@ -27,3 +27,10 @@ class EnquiryForm(FlaskForm):
 	subject = StringField('Subject', validators=[Required(), Length(1,64)])
 	body = StringField('Enquiry', validators=[Required()])
 	submit = SubmitField('Submit Enquiry')
+
+
+class EditProfileForm(FlaskForm):
+    name = StringField('Real name', validators=[Length(0, 64)])
+    location = StringField('Location', validators=[Length(0, 64)])
+    about_me = TextAreaField('About me')
+    submit = SubmitField('Submit')

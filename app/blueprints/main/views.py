@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from flask_login import current_user, login_required
 from . import main as main_blueprint
-from app.blueprints.main.forms import BookForm, ReviewForm, EnquiryForm
+from app.blueprints.main.forms import BookForm, ReviewForm, EnquiryForm, EditProfileForm
 from app.utils.decorators import admin_required
 from app.models import Book, Permission, Review, User, Enquiry
 from app import db
@@ -19,6 +19,23 @@ def user(username):
     if user is None:
         abort(404)
     return render_template('main/user.html', user=user)
+
+
+@main_blueprint.route('/edit-profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+	form = EditProfileForm()
+	if form.validate_on_submit():
+		current_user.name = form.name.data
+		current_user.location = form.location.data
+		current_user.about_me = form.about_me.data
+		db.session.add(current_user)
+		flash('Your profile has been updated.')
+		return redirect(url_for('main.user', username=current_user.username))
+	form.name.data = current_user.name
+	form.location.data = current_user.location
+	form.about_me.data = current_user.about_me
+	return render_template('main/edit_profile.html', form=form)
 
 
 @main_blueprint.route('/book/<int:id>', methods=['GET', 'POST'])
@@ -63,10 +80,33 @@ def enquiry():
 	form = EnquiryForm()
 	if current_user.is_authenticated and current_user.confirmed \
 		and form.validate_on_submit():
-		enquiry = Enquiry(email=form.email.data, body=form.body.data, enquirer=current_user._get_current_object())
+		enquiry = Enquiry(email=form.email.data, subject=form.subject.data, body=form.body.data, enquirer=current_user._get_current_object())
 		db.session.add(enquiry)
 		return redirect(url_for('main.index'))
-	return render_template('main/enquiry.html', form=form)
+	return render_template('main/create_enquiry.html', form=form)
+
+
+@main_blueprint.route('/view-equiry/<int:id>', methods=['GET'])
+@login_required
+def view_enquiry(id):
+	enquiry = Enquiry.query.get_or_404(id)
+	if enquiry is None:
+		abort(404)
+	return render_template('main/view_enquiry.html', enquiry=enquiry)
+
+@main_blueprint.route('/admin', methods=['GET'])
+@admin_required
+def admin():
+	enquiries = Enquiry.query.all()
+	return render_template('main/admin_view.html', enquiries=enquiries)
+
+
+
+
+
+
+
+
 
 
 

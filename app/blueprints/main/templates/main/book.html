@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %} {{ book.title }} {% endblock %}
+{% block title %} {{ book.name }} {% endblock %}
 
 {% block page_content %}
 
@@ -22,7 +22,7 @@
 			<img class="rounded-circle profile-thumbnail" src="{{ review.reviewer.gravatar(size=40) }}">
 		</div>
 		<div class="col-lg-8">
-			<h1>{{ review.reviewer.username }}</h1>
+			<a href="{{ url_for('main.user', username=review.reviewer.username) }}"><h1>{{ review.reviewer.username }}</h1></a>
 			<p>{{ review.body }}</p>
 			<span class="badge badge-secondary badge-pill">{{ review.rating }}</span>
 		</div>

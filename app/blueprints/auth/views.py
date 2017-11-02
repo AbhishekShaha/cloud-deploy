@@ -8,6 +8,11 @@ from app.utils.tasks import send_email
 from . import auth
 
 
+@auth.before_app_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.ping()
+
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -23,6 +28,7 @@ def register():
 		flash('A confirmation email has been sent to you by email.')
 		return redirect(url_for('auth.login'))
 	return render_template('auth/register.html', form=form)
+
 
 @auth.route('/unconfirmed')
 def unconfirmed():

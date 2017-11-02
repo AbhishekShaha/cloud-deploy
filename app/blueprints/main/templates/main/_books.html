@@ -10,7 +10,7 @@
 			<p class="card-text">{{ book.description }}</p>
 		</div>
 		<div class="card-footer">
-			<small class="text-muted">{% for n in range(book.average) %} &#9733; {% endfor %}</small>
+			<small class="text-muted">{% if book.average is not none %}{% for n in range(book.average) %} &#9733; {% endfor %} {% else %}(No Reviews){% endif %} </small>
 		</div>
 	</div>
 </div>
