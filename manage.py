@@ -23,5 +23,9 @@ def recreate_db():
     db.create_all()
     db.session.commit()
 
+@manager.command
+def seed_db():
+	Role.insert_roles()
+
 if __name__ == '__main__':
 	manager.run()
