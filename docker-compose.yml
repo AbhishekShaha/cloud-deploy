@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
     users-db:
-        container_name: user_db
+        container_name: users-db
         build: ./app/db
         ports:
             - 5435:5432
@@ -13,17 +13,17 @@ services:
             test: exit 0
 
     users-service:
-        container_name: users_service
+        container_name: users-service
         build: ./
         ports:
             - 5001:5000
         environment:
             - APP_SETTINGS=app.config.DevelopmentConfig
-            - DEV_DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
-            - TEST_DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_test
-            - SECRET_KEY='db84456420fddaf133f2418ef219f7ca11e35d6650220ae9'
-            - SITE_ADMIN=tomnolan95@gmail.com
-            - MAIL_PASSWORD=hxupokqhmpuyrguz
+            - DEV_DATABASE_URL=${DOCKER_DEV_DATABASE_URL}
+            - TEST_DATABASE_URL=${DOCKER_TEST_DATABASE_URL}
+            - SECRET_KEY=${SECRET_KEY}
+            - SITE_ADMIN=${SITE_ADMIN}
+            - MAIL_PASSWORD=${MAIL_PASSWORD}
         depends_on:
             users-db:
                 condition: service_healthy

@@ -104,8 +104,6 @@ class User(UserMixin, db.Model):
 
 	def generate_confirmation_token(self, expiration=3600):
 
-		print(self.email)
-		print(self.id)
 		"""
 		Generates a confirmation token what will be sent as part of an email for registering a User.
 		:param: self: User object.
@@ -118,8 +116,6 @@ class User(UserMixin, db.Model):
 		token = s.dumps({'confirm': self.id})
 
 		data = s.loads(token)
-
-		print(data)
 
 		return s.dumps({'confirm': self.id})
 
@@ -168,6 +164,28 @@ class User(UserMixin, db.Model):
 	def ping(self):
 		self.last_seen = datetime.utcnow()
 		db.session.add(self)
+
+	@staticmethod
+	def generate_fake(count=100):
+		from sqlalchemy.exc import IntegrityError
+		from random import seed
+		import forgery_py
+
+		seed()
+		for i in range(count):
+			u = User(email=forgery_py.internet.email_address(),
+			 username=forgery_py.internet.user_name(True),
+			 password=forgery_py.lorem_ipsum.word(),
+			 confirmed=True,
+			 name=forgery_py.name.full_name(),
+			 location=forgery_py.address.city(),
+			 about_me=forgery_py.lorem_ipsum.sentence(),
+			 member_since=forgery_py.date.date(True))
+			db.session.add(u)
+			try:
+				db.session.commit()
+			except IntegrityError:
+				db.session.rollback()
 
 
 class AnonymousUser(AnonymousUserMixin):

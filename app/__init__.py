@@ -16,14 +16,14 @@ login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
 
-def create_app():
+def create_app(ctx='app.config.DevelopmentConfig'):
 
 	#instantiate application
 	app = Flask(__name__)
 
 
-	app_settings = os.getenv('APP_SETTINGS')
-	app.config.from_object(app_settings)
+	#app_settings = os.getenv(ctx)
+	app.config.from_object(ctx)
 
 	#set up extensions
 

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, current_app
 from flask_login import current_user, login_required
 from . import main as main_blueprint
 from app.blueprints.main.forms import BookForm, ReviewForm, EnquiryForm, EditProfileForm
