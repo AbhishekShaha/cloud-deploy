@@ -15,8 +15,6 @@ services:
     users-service:
         container_name: users_service
         build: ./
-        volumes:
-            - '../CA674-Cloud-Architecture:/usr/src/app'
         ports:
             - 5001:5000
         environment:

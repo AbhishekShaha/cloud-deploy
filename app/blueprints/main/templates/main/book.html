@@ -8,6 +8,7 @@
 <h1>{{ book.name }}</h1>
 <h2>{{ book.author }}</h2>
 <p>{{ book.description }}</p>
+<p><small class="text-muted">{% if book.average is not none %}{% for n in range(book.average) %} &#9733; {% endfor %} {% else %}(No Reviews){% endif %}</small></p>
 <hr>
 <h3>Write Review</h3>
 <hr>
