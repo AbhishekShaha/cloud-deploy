@@ -18,9 +18,9 @@ You can run this application using Docker or by itself standalone.
 
 <h2>Without Docker</h2>
 <ol>
-  <li> Install PostgreSQL (https://www.postgresql.org/download/) and create database table users-dev</li>
-  <li> Clone repo and cd new directory</li>
-  <li> Create .env file and set <code>DEV_DATABASE_URL='postgresql://localhost/devdb'</code></li>
+  <li> Install PostgreSQL (https://www.postgresql.org/download/) and create database table devdb & testdb</li>
+  <li> Clone repo and cd to new directory</li>
+  <li> Use sample.env file using <code>source sample.env</code></li>
   <li> Run <code> python manage.py runserver</code></li>
   <li> Navigate to http://127.0.0.1:5000/</li>
  </ol>
@@ -28,6 +28,9 @@ You can run this application using Docker or by itself standalone.
  <h2>With Docker</h2>
  <ol>
   <li> Install Virtualbox (https://www.virtualbox.org/wiki/Downloads)</li>
+  <li> Clone repo and cd to new directory</li>
+  <li> Uncomment lines in sample.env for using with Docker and comment out <code>$vars</code> for using without Docker</code>   </li>
+  <li> Change name of sample.env to .env</li>
   <li> Create new Docker machine using <code>docker-machine create -d virtualbox dev</code></li>
   <li> Run <code> eval "$(docker-machine env dev)"</code></li>
   <li> Run <code> docker-compose up -d --build </code></li>
