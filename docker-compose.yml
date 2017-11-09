@@ -17,10 +17,11 @@ services:
         build: ./
         ports:
             - 5001:5000
+        env_file:
+            - ./.env
         environment:
-            - APP_SETTINGS=app.config.DevelopmentConfig
-            - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
-            - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
+            - DATABASE_URL=${DEV_DATABASE_URL}
+            - DATABASE_TEST_URL=${TEST_DATABASE_URL}
             - SECRET_KEY=${SECRET_KEY}
             - SITE_ADMIN=${SITE_ADMIN}
             - MAIL_PASSWORD=${MAIL_PASSWORD}

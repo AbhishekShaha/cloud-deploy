@@ -26,7 +26,6 @@ def create_app(ctx='app.config.DevelopmentConfig'):
 	app.config.from_object(ctx)
 
 	#set up extensions
-
 	db.init_app(app)
 	moment.init_app(app)
 	bootstrap.init_app(app)
