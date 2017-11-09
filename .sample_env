@@ -1,0 +1,19 @@
+#-----------------------------------------------------
+# WITHOUT DOCKER
+#-----------------------------------------------------
+
+export DEV_DATABASE_URL='postgresql://localhost/devdb'
+export TEST_DATABASE_URL='postgresql://localhost/testdb'
+export SECRET_KEY='xxxxxx'
+export SITE_ADMIN=xxxxxxx
+export MAIL_PASSWORD=xxxxxxx
+
+#-----------------------------------------------------
+# WITH DOCKER
+#-----------------------------------------------------
+
+# SECRET_KEY='xxxxxx'
+# SITE_ADMIN=xxxxxx
+# MAIL_PASSWORD=xxxxxxx
+# DEV_DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
+# TEST_DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_test
