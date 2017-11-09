@@ -1,0 +1,44 @@
+version: '2.1'
+
+services:
+    users-db:
+        container_name: users-db
+        build: ./app/db
+        ports:
+            - 5435:5432
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        healthcheck:
+            test: exit 0
+
+    users-service:
+        container_name: users-service
+        build: ./
+        ports:
+            - '5000'
+        env_file:
+            - ./.env
+        environment:
+            - DATABASE_URL=${DEV_DATABASE_URL}
+            - DATABASE_TEST_URL=${TEST_DATABASE_URL}
+            - SECRET_KEY=${SECRET_KEY}
+            - SITE_ADMIN=${SITE_ADMIN}
+            - MAIL_PASSWORD=${MAIL_PASSWORD}
+        depends_on:
+            users-db:
+                condition: service_healthy
+        links:
+            - users-db
+
+    nginx:
+        container_name: nginx
+        build: ./app/nginx/
+        restart: always
+        ports:
+            - 80:80
+        depends_on:
+            users-service:
+                condition: service_started
+        links:
+            - users-service
