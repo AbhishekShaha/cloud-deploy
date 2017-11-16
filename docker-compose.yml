@@ -4,6 +4,7 @@ services:
     users-db:
         container_name: users-db
         build: ./app/db
+        image: eu.gcr.io/cloudarchitecture-ca674/users-db
         ports:
             - 5435:5432
         environment:
@@ -15,6 +16,7 @@ services:
     users-service:
         container_name: users-service
         build: ./
+        image: eu.gcr.io/cloudarchitecture-ca674/users-service
         ports:
             - 5001:5000
         env_file:
@@ -34,6 +36,7 @@ services:
     nginx:
         container_name: nginx
         build: ./app/nginx/
+        image: eu.gcr.io/cloudarchitecture-ca674/nginx
         restart: always
         ports:
             - 80:80

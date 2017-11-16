@@ -1,0 +1,47 @@
+metadata:
+ name: "postgres"
+kind: "Service"
+apiVersion: "v1"
+spec:
+  ports:
+  - name: "postgres"
+    protocol: "TCP"
+    port: 5432
+    targetPort: 5432
+  selector:
+    name: postgres
+---
+
+metadata:
+  name: postgres
+apiVersion: v1
+kind: ReplicationController
+spec:
+  replicas: 1
+  selector:
+    name: postgres
+  template:
+    metadata:
+      labels:
+         name: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: eu.gcr.io/cloudarchitecture-ca674/users-db
+        # disable this in production±
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgresdata
+          mountPath: /usr/local/var/postgres
+      # PostgreSQL Data
+      # Replace this with the persistent disk of your choice
+      # TODO: replace with Persistent Volume
+      volumes:
+      - name: postgresdata
+        gcePersistentDisk:
+          # your disk name here
+          pdName: pg-data-disk
+          fsType: ext4
+---

@@ -10,6 +10,12 @@ if os.environ.get('FLASK_COVERAGE'):
     COV = coverage.coverage(branch=True, include='app/*')
     COV.start()
 
+if os.getenv('GCLOUD'): 
+    try:
+      import googleclouddebugger
+      googleclouddebugger.enable()
+    except ImportError:
+      pass
 
 app = create_app()
 manager = Manager(app)
@@ -42,7 +48,6 @@ def test(coverage=False):
         os.execvp(sys.executable, [sys.executable] + sys.argv)
     import unittest
     tests = unittest.TestLoader().discover('tests')
-    print(tests)
     unittest.TextTestRunner(verbosity=2).run(tests)
     if COV:
         COV.stop()

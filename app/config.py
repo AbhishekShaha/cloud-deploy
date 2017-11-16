@@ -14,11 +14,14 @@ class BaseConfig():
 	MAIL_USE_TLS = True
 	MAIL_USERNAME = os.environ.get('SITE_ADMIN')
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+	POSTGRES_DB_USER = os.getenv('POSTGRES_DB_USER')
+	POSTGRES_DB_PASSWORD = os.getenv('POSTGRES_DB_PASSWORD')
+	POSTGRES_DB_HOST = os.getenv('POSTGRES_DB_HOST')
 
 
 class DevelopmentConfig(BaseConfig):
 	DEBUG = True
-	SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URL')
+	SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL') or 'postgresql+psycopg2://postgres:postgres@localhost:5432/postgres'
 
 
 class TestingConfiguration(BaseConfig):

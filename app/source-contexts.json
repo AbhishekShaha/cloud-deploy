@@ -1,0 +1,14 @@
+[
+  {
+    "context": {
+      "git": {
+        "revisionId": "087b143d847b52fc202bd1b1f4a904e725d44721", 
+        "url": "https://github.com/tnolan8/CA674-Cloud-Architecture.git"
+      }
+    }, 
+    "labels": {
+      "category": "remote_repo", 
+      "remote_name": "origin"
+    }
+  }
+]
