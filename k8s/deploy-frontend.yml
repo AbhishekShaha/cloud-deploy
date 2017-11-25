@@ -5,14 +5,15 @@
 #   https://cloud.google.com/container-engine/docs/services/
 # For more information about external HTTP load balancing see:
 #   https://cloud.google.com/container-engine/docs/load-balancer
-apiVersion: v1
-kind: ReplicationController
+
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   name: frontend
   labels:
     name: frontend
 spec:
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
@@ -70,7 +71,7 @@ spec:
         - mountPath: /cloudsql
           name: cloudsql
         - mountPath: /credentials
-          name: service-account-token
+          name: cloudsql-instance-credentials
 
       volumes:
         - name: cloudsql
@@ -78,22 +79,6 @@ spec:
         - name: cloudsql-instance-credentials
           secret:
             secretName: cloudsql-instance-credentials
-        - name: service-account-token
+        - name: cloudsql-db-credentials
           secret:
-            secretName: service-account-token
-        # [END volumes]
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-  labels:
-    name: frontend
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    targetPort: 5000
-  selector:
-    name: frontend
+            secretName: cloudsql-db-credentials

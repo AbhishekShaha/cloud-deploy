@@ -1,6 +1,7 @@
 import os
+import logging
 from app import create_app, db
-from flask_script import Manager, Shell
+from flask_script import Manager, Shell, Server
 from flask_migrate import Migrate, MigrateCommand
 from app.models import User, Role
 
@@ -18,7 +19,13 @@ if os.getenv('GCLOUD'):
       pass
 
 app = create_app()
+#app.logger.addHandler(logging.StreamHandler(sys.stdout))
+#app.logger.setLevel(logging.DEBUG)
+
 manager = Manager(app)
+server = Server(host="0.0.0.0", port=5000)
+manager.add_command('runserver', server)
+
 migrate = Migrate(app, db)
 
 manager.add_command('db', MigrateCommand)
@@ -30,10 +37,13 @@ manager.add_command("shell", Shell(make_context=make_shell_context))
 
 @manager.command
 def recreate_db():
-    """Recreates a database."""
-    db.drop_all()
-    db.create_all()
-    db.session.commit()
+    if Role.query.all() is None:
+        """Recreates a database."""
+        db.drop_all()
+        db.create_all()
+        db.session.commit()
+    else:
+        pass
 
 @manager.command
 def seed_db():
