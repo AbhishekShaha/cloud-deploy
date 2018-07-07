@@ -21,7 +21,7 @@ class BaseConfig():
 
 class DevelopmentConfig(BaseConfig):
 	DEBUG = True
-	SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL') or 'postgresql+psycopg2://postgres:postgres@localhost:5432/postgres'
+	SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL') or 'postgresql://katwedb:kd123456@katwedb.cgfykhwersxp.eu-west-1.rds.amazonaws.com/kdb'
 
 
 class TestingConfiguration(BaseConfig):

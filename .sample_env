@@ -2,8 +2,10 @@
 # WITHOUT DOCKER
 #-----------------------------------------------------
 
-export DEV_DATABASE_URL='postgresql://localhost/devdb'
-export TEST_DATABASE_URL='postgresql://localhost/testdb'
+#export DEV_DATABASE_URL='postgresql://localhost/devdb'
+#export TEST_DATABASE_URL='postgresql://localhost/testdb'
+export DEV_DATABASE_URL='postgresql://katwedb:kd123456@katwedb.cgfykhwersxp.eu-west-1.rds.amazonaws.com/kdb'
+export TEST_DATABASE_URL='postgresql://katwedb:kd123456@katwedb.cgfykhwersxp.eu-west-1.rds.amazonaws.com/kdb'
 export SECRET_KEY='xxxxxx'
 export SITE_ADMIN=xxxxxxx
 export MAIL_PASSWORD=xxxxxxx
